@@ -3,27 +3,28 @@ import java.util.Comparator;
 
 public class HeapSortSorterImple<T> implements Sorter<T> {
 
-    public void heapSort(T arr[], int n, int i, Comparator<T> c) {
-        int largest = i; // Initialize largest as root
-        int l = 2 * i + 1; // left = 2*i + 1
-        int r = 2 * i + 2; // right = 2*i + 2
+    private void swap(T[] a, int i, int j) {
+        T temp = a[i];
+        a[i]=a[j];
+        a[j] = temp;
+    }
 
-        // If left child is larger than root
-        if (l < n && c.compare(arr[l], arr[largest]) > 0)
-            largest = l;
+    private void buildMaxHeap(T arr[], int n, Comparator<T> c)
+    {
+        for (int i = 1; i < n; i++)
+        {
+            // if child is bigger than parent
+            if (c.compare(arr[i], arr[(i - 1) / 2]) > 0)
+            {
+                int j = i;
 
-        // If right child is larger than largest so far
-        if (r < n && c.compare(arr[r], arr[largest]) > 0)
-            largest = r;
-
-        // If largest is not root
-        if (largest != i) {
-            T swap = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = swap;
-
-            // Recursively heapify the affected sub-tree
-            heapSort(arr, n, largest, c);
+                // swap child and parent until parent is smaller
+                while (c.compare(arr[j], arr[(j - 1) / 2]) > 0)
+                {
+                    swap(arr, j, (j - 1) / 2);
+                    j = (j - 1) / 2;
+                }
+            }
         }
     }
 
@@ -33,20 +34,31 @@ public class HeapSortSorterImple<T> implements Sorter<T> {
         System.out.println();
 
         int n = arr.length;
+        buildMaxHeap(arr, n, c);
 
-        // Build heap (rearrange array)
-        for (int i = n / 2 - 1; i >= 0; i--)
-            heapSort(arr, n, i, c);
+        for (int i = n - 1; i > 0; i--)
+        {
+            // swap value of first index with last indexed
+            swap(arr, 0, i);
 
-        // One by one extract an element from heap
-        for (int i = n - 1; i > 0; i--) {
-            // Move current root to end
-            T temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
+            // maintaining heap property after each swapping
+            int j = 0, index;
 
-            // call max heapify on the reduced heap
-            heapSort(arr, i, 0, c);
+            do
+            {
+                index = (2 * j + 1);
+
+                // if left child is smaller than right child point index variable to right child
+                if (index < (i - 1) && c.compare(arr[index], arr[index + 1]) < 0)
+                    index++;
+
+                // if parent is smaller than child then swapping parent with child having higher value
+                if (index < i && c.compare(arr[j], arr[index]) < 0)
+                    swap(arr, j, index);
+
+                j = index;
+
+            } while (index < i);
         }
     }
 
