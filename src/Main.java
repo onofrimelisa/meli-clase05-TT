@@ -26,10 +26,6 @@ public class Main {
             timer.start();
             sorter.sort(array, comparator);
             timer.end();
-
-            System.out.println("The array after sorting is the folowing: ");
-            System.out.println(Arrays.toString(array));
-            System.out.println();
             System.out.println("Elapsed Time: " + timer.elapsedTime());
 
         }catch (Exception e) {
