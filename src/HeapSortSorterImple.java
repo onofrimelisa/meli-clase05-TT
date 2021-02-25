@@ -29,6 +29,9 @@ public class HeapSortSorterImple<T> implements Sorter<T> {
 
     @Override
     public void sort(T[] arr, Comparator<T> c) {
+        System.out.println("Sorting using Heap Sort algorithm.");
+        System.out.println();
+
         int n = arr.length;
 
         // Build heap (rearrange array)
@@ -51,8 +54,16 @@ public class HeapSortSorterImple<T> implements Sorter<T> {
         System.out.println("Testing Heap Sort algorithm...");
         HeapSortSorterImple sorter = new HeapSortSorterImple();
         Integer arr[] = {5, 18, 100, 589, 2, 0, 0, 75};
+
+        System.out.println("The array before sorting is the folowing: ");
+        System.out.println(Arrays.toString(arr));
+        System.out.println();
+
         Comparator<Integer> comparator = (a, b) -> a - b;
         sorter.sort(arr, comparator);
+
+        System.out.println("The array after sorting is the folowing: ");
         System.out.println(Arrays.toString(arr));
+        System.out.println();
     }
 }
