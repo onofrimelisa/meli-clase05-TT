@@ -25,7 +25,7 @@ public class QuickSortSorterImple<T> implements Sorter<T> {
         return i+1;
     }
 
-   public void quickSort(T arr[], int begin, int end, Comparator<T> c) {
+   private void quickSort(T arr[], int begin, int end, Comparator<T> c) {
        int[] stack = new int[end - begin + 1];
 
        // initialize top of stack
